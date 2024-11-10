@@ -1,6 +1,6 @@
 import pandas as pd
 
-def convert_to_datetime(file1: pd.DataFrame, file2: pd.DataFrame):
+def convert_to_datetime(file1: pd.DataFrame, file2: pd.DataFrame) -> list:
 	print(list(file1.columns))
 	file1['time'] = pd.to_datetime(file1['time'], errors='coerce')
 	

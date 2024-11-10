@@ -1,4 +1,5 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 
 def get_date_limits(file1: pd.DataFrame, file2: pd.DataFrame) -> list:
 	first_year_file1 = file1['time'].iloc[0].year
@@ -37,6 +38,9 @@ def fill_merged_set(merged_data_set: pd.DataFrame, file1: pd.DataFrame, file2: p
 
 	merged_data_set['Data1'] = yearly_average_data1['data']
 	merged_data_set['Data2'] = yearly_average_data2['data']
+
+	merged_data_set.plot(kind='scatter', x='Data1', y='Data2', color='red', marker='o')
+	plt.show()
 
 	return merged_data_set
 

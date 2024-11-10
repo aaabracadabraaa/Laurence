@@ -1,5 +1,3 @@
-import pandas as pd
-
 import initialisation
 import clean_up
 import merge_data_sets
