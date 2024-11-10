@@ -1,0 +1,5 @@
+# files
+file1_loc = "/Users/francois/Desktop/Laurence/sea-level.csv"
+file2_loc = "/Users/francois/Desktop/Laurence/temp-anomaly.csv"
+file1_index = "0134"
+file2_index = "01"
