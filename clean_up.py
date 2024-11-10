@@ -1,5 +1,14 @@
 import pandas as pd
 
+def convert_to_datetime(file1: pd.DataFrame, file2: pd.DataFrame):
+	print(list(file1.columns))
+	file1['time'] = pd.to_datetime(file1['time'], errors='coerce')
+	
+	print(list(file2.columns))
+	file2['time'] = pd.to_datetime(file2['time'], errors='coerce')
+
+	return [file1, file2]
+
 
 def drop_columns(file: pd.DataFrame, default_drop: str) -> pd.DataFrame:
 	headers_file = list(file.columns)

@@ -1,14 +1,4 @@
 import pandas as pd
-import numpy as np
-
-def convert_to_datetime(file1: pd.DataFrame, file2: pd.DataFrame):
-	print(list(file1.columns))
-	file1['time'] = pd.to_datetime(file1['time'], errors='coerce')
-	
-	print(list(file2.columns))
-	file2['time'] = pd.to_datetime(file2['time'], errors='coerce')
-
-	return [file1, file2]
 
 def get_date_limits(file1: pd.DataFrame, file2: pd.DataFrame) -> list:
 	first_year_file1 = file1['time'].iloc[0].year
@@ -47,7 +37,7 @@ def fill_merged_set(merged_data_set: pd.DataFrame, file1: pd.DataFrame, file2: p
 
 	merged_data_set['Data1'] = yearly_average_data1['data']
 	merged_data_set['Data2'] = yearly_average_data2['data']
-	
+
 	return merged_data_set
 
 
