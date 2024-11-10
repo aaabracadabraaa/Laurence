@@ -8,10 +8,8 @@ def main() -> None:
 	sea_anomalies: pd.DataFrame = initialisation.read_file(file_names[1])
 	print(sea_level); print(sea_anomalies)
 
-	clean_up.get_headers(sea_level, sea_anomalies)
-	
-
-
+	[sea_level, sea_anomalies] = clean_up.clean_up(sea_level, sea_anomalies)
+	print(sea_level)
 
 if __name__ == '__main__':
 	main()
