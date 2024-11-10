@@ -11,12 +11,16 @@ def drop_columns(file: pd.DataFrame, default_drop: str) -> pd.DataFrame:
 	while (how_many > 0):
 		file = file.drop([headers_file[int(to_keep[how_many - 1])]], axis=1)
 		how_many -= 1
-	print(list(file.columns))
+	columns_names = list(file.columns)
+	print(columns_names)
+	file = file.rename(columns={columns_names[0]:"time"})
+	file = file.rename(columns={columns_names[1]:"data"})
 	return file
  
 def clean_up(file1: pd.DataFrame, file2: pd.DataFrame) -> list:
 	file1 = drop_columns(file1,"0134" )
 	file2 = drop_columns(file2, "01")
+
 	return [file1, file2]
 
 

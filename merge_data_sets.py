@@ -1,32 +1,25 @@
 import pandas as pd
 import numpy as np
 
-def convert_to_datetime(file1: pd.DataFrame, file2: pd.DataFrame, default_select: str):
-	select1 = input("What is the name of the column containing time ? ")
+def convert_to_datetime(file1: pd.DataFrame, file2: pd.DataFrame):
 	print(list(file1.columns))
-	if (select1 == ""):
-		select1 = default_select
-	file1[select1] = pd.to_datetime(file1[select1], errors='coerce')
+	file1['time'] = pd.to_datetime(file1['time'], errors='coerce')
 	
-	select2 = input("What is the name of the column containing time ? ")
 	print(list(file2.columns))
-	if (select2 == ""):
-		select2 = default_select
-	file2[select2] = pd.to_datetime(file2[select2], errors='coerce')
-	
-	print(file1)
+	file2['time'] = pd.to_datetime(file2['time'], errors='coerce')
+
 	return [file1, file2]
 
 def get_date_limits(file1: pd.DataFrame, file2: pd.DataFrame) -> list:
-	first_year_file1 = file1['Day'].iloc[0].year
-	first_year_file2 = file2['Day'].iloc[0].year
+	first_year_file1 = file1['time'].iloc[0].year
+	first_year_file2 = file2['time'].iloc[0].year
 
-	last_year_file1 = file1['Day'].iloc[-1].year
-	last_year_file2 = file2['Day'].iloc[-1].year
+	last_year_file1 = file1['time'].iloc[-1].year
+	last_year_file2 = file2['time'].iloc[-1].year
 
 	return [first_year_file1, first_year_file2, last_year_file1, last_year_file2]
 
-def initialise_merged_data_set(limits: list) -> np.array:
+def initialise_merged_data_set(limits: list) -> pd.DataFrame:
 	if (limits[0] < limits[1]):
 		start = limits[1]
 	else:
@@ -37,13 +30,24 @@ def initialise_merged_data_set(limits: list) -> np.array:
 	else:
 		end = limits[3]
 	number_of_year = end - start + 1
-	merged_data_set = np.zeros((141, 3))
-
-	n = 0
-	while (start < end + 1):
-		merged_data_set[n][0] = start
-		start += 1
-		n += 1
-
+	merged_data_set = pd.DataFrame(0, index=range(number_of_year), columns=["Year", "Data1", "Data2"])
+	merged_data_set['Year'] = range(start, end + 1)
 	return (merged_data_set)
+
+def fill_merged_set(merged_data_set: pd.DataFrame, file1: pd.DataFrame, file2: pd.DataFrame, limits: list) -> pd.DataFrame:
+	file1['year'] = file1['time'].dt.year
+	yearly_average_data1 = file1.groupby('year')['data'].mean().reset_index()
+	file2['year'] = file2['time'].dt.year
+	yearly_average_data2 = file2.groupby('year')['data'].mean().reset_index()
+
+	start_year = max(limits[0], limits[1])
+	end_year = min(limits[2], limits[3])
+	yearly_average_data1 = yearly_average_data1[(yearly_average_data1['year'] >= start_year) & (yearly_average_data1['year'] <= end_year)]
+	yearly_average_data2 = yearly_average_data2[(yearly_average_data2['year'] >= start_year) & (yearly_average_data2['year'] <= end_year)]
+
+	
+
+	return merged_data_set
+
+
 
