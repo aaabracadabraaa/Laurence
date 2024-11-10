@@ -45,8 +45,9 @@ def fill_merged_set(merged_data_set: pd.DataFrame, file1: pd.DataFrame, file2: p
 	yearly_average_data1 = yearly_average_data1[(yearly_average_data1['year'] >= start_year) & (yearly_average_data1['year'] <= end_year)]
 	yearly_average_data2 = yearly_average_data2[(yearly_average_data2['year'] >= start_year) & (yearly_average_data2['year'] <= end_year)]
 
+	merged_data_set['Data1'] = yearly_average_data1['data']
+	merged_data_set['Data2'] = yearly_average_data2['data']
 	
-
 	return merged_data_set
 
 
