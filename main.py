@@ -12,6 +12,10 @@ def main() -> None:
 	data_collection = [sea_level, sea_anomalies]
 	data_collection = clean_up.clean_up(data_collection[0], data_collection[1])
 	data_collection = merge_data_sets.convert_to_datetime(data_collection[0], data_collection[1], 'Day')
+	
+	merged_set_limits = merge_data_sets.get_date_limits(data_collection[0], data_collection[1])
+	merged_set = merge_data_sets.initialise_merged_data_set(merged_set_limits)
+	print(merged_set)
 
 
 
